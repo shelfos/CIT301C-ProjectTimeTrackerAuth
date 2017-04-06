@@ -29,7 +29,7 @@ namespace ProjectTimeTrackerAuth.Controllers
             var timeLog = await _context.TimeLogs
                 .FromSql(query, User.Identity.Name)
                 .AsNoTracking()
-                .ToListAsync();
+                .SingleOrDefaultAsync();
             ViewData["LastTimeLog"] = timeLog;
 
             //get list of activities

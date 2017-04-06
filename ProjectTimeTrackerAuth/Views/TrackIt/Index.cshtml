@@ -3,17 +3,28 @@
 @{
     ViewData["Title"] = "Track It!";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var currentActivity = "";
+    var currentActivityStart = "";
+    if (ViewBag.LastTimeLog != null) {
+        foreach (var element in ViewBag.ActivityID) {
+            if(Int32.Parse(element.Value) == ViewBag.LastTimeLog.ActivityID) {
+                currentActivity = element.Text;
+                currentActivityStart = ViewBag.LastTimeLog.StartTime.ToString();
+                break;
+            }
+        }
+    }
 }
 
 <h2>Track It!</h2>
-
 @if (ViewBag.LastTimeLog != null) {
     <form asp-action="StopActivity">
         <div class="form-horizontal">
             <div class="form-group">
                 <dl class="dl-horizontal col-md-6">
                     <dt>Current Activity:</dt>
-                    <dd>Something</dd>
+                    <dd><span>@currentActivity</span><br /><span>Start Date/Time: @currentActivityStart</span></dd>
                 </dl>
                 <div class="col-md-2">
                     <input type="submit" value="STOP!" class="btn btn-danger" />
