@@ -10,9 +10,8 @@ namespace ProjectTimeTrackerAuth.Models
         public int TimeLogID { get; set; }
         public string Username { get; set; }
         public int ActivityID { get; set; }
-        public int UsersID { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         public Activity Activities { get; set; }
     }

@@ -29,21 +29,23 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Project Time Tracker</a>
+                <a asp-area="" asp-controller="TrackIt" asp-action="Index" class="navbar-brand" style="padding-top:9px;">
+                    <button type="button" class="btn btn-success">TRACK IT!</button>
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="ActivityTypes" asp-action="Index">Activity Types</a></li>
                     <li><a asp-area="" asp-controller="Activities" asp-action="Index">Activities</a></li>
-                    <li><a asp-area="" asp-controller="TrackTime" asp-action="Index">Track Time</a></li>
+                    <li><a asp-area="" asp-controller="TimeLogs" asp-action="Index">Time Logs</a></li>
                     <li><a asp-area="" asp-controller="Summary" asp-action="Index">Summary</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top: 100px;">
         @RenderBody()
         <hr />
         <footer>
