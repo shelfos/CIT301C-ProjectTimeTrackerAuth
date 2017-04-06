@@ -1,4 +1,14 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+
+@{
+    string selectedTab = (ViewData["Tab"] ?? string.Empty) as string;
+    var aboutSelected = selectedTab == "About" ? "selected-nav" : "";
+    var actTypesSelected = selectedTab == "Activity Types" ? "selected-nav" : "";
+    var activitiesSelected = selectedTab == "Activities" ? "selected-nav" : "";
+    var timeLogsSelected = selectedTab == "Time Logs" ? "selected-nav" : "";
+    var summarySelected = selectedTab == "Summary" ? "selected-nav" : "";
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,11 +45,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="ActivityTypes" asp-action="Index">Activity Types</a></li>
-                    <li><a asp-area="" asp-controller="Activities" asp-action="Index">Activities</a></li>
-                    <li><a asp-area="" asp-controller="TimeLogs" asp-action="Index">Time Logs</a></li>
-                    <li><a asp-area="" asp-controller="Summary" asp-action="Index">Summary</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About" class="@aboutSelected">About</a></li>
+                    <li><a asp-area="" asp-controller="ActivityTypes" asp-action="Index" class="@actTypesSelected">Activity Types</a></li>
+                    <li><a asp-area="" asp-controller="Activities" asp-action="Index" class="@activitiesSelected">Activities</a></li>
+                    <li><a asp-area="" asp-controller="TimeLogs" asp-action="Index" class="@timeLogsSelected">Time Logs</a></li>
+                    <li><a asp-area="" asp-controller="Summary" asp-action="Index" class="@summarySelected">Summary</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

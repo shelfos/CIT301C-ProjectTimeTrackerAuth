@@ -48,3 +48,8 @@ textarea {
         display: none;
     }
 }
+
+.selected-nav {
+    border-bottom: 3px solid #5cb85c;
+    color: white!important;
+}
