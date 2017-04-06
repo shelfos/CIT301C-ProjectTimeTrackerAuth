@@ -72,15 +72,17 @@ namespace ProjectTimeTrackerAuth.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TimeLogID,Username,ActivityID,StartTime,EndTime")] TimeLog timeLog)
+        public async Task<IActionResult> Create([Bind("ActivityID,StartTime,EndTime")] TimeLog timeLog)
         {
+            timeLog.Username = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
                 _context.Add(timeLog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ActivityID"] = new SelectList(_context.Activities.Where(o => o.Username == User.Identity.Name), "ActivityID", "Username", timeLog.ActivityID);
+            ViewData["ActivityID"] = new SelectList(_context.Activities.Where(o => o.Username == User.Identity.Name), "ActivityID", "ActivityName", timeLog.ActivityID);
             return View(timeLog);
         }
 
@@ -98,7 +100,7 @@ namespace ProjectTimeTrackerAuth.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActivityID"] = new SelectList(_context.Activities.Where(o => o.Username == User.Identity.Name), "ActivityID", "Username", timeLog.ActivityID);
+            ViewData["ActivityID"] = new SelectList(_context.Activities.Where(o => o.Username == User.Identity.Name), "ActivityID", "ActivityName", timeLog.ActivityID);
             return View(timeLog);
         }
 
