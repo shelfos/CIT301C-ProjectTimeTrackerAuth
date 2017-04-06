@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectTimeTrackerAuth.Data;
 using ProjectTimeTrackerAuth.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectTimeTrackerAuth.Controllers
 {
@@ -20,6 +21,7 @@ namespace ProjectTimeTrackerAuth.Controllers
         }
 
         // GET: Activities
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var timerContext = _context.Activities.Include(a => a.ActivityTypes);
@@ -27,6 +29,7 @@ namespace ProjectTimeTrackerAuth.Controllers
         }
 
         // GET: Activities/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +39,7 @@ namespace ProjectTimeTrackerAuth.Controllers
 
             var activity = await _context.Activities
                 .Include(a => a.ActivityTypes)
-                .SingleOrDefaultAsync(m => m.ActivityID == id);
+                .SingleOrDefaultAsync(m => m.ActivityID == id && m.Username == User.Identity.Name);
             if (activity == null)
             {
                 return NotFound();
@@ -46,9 +49,10 @@ namespace ProjectTimeTrackerAuth.Controllers
         }
 
         // GET: Activities/Create
+        [Authorize]
         public IActionResult Create()
         {
-            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes, "ActivityTypeID", "ActTypeDescrip");
+            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes.Where(o => o.Username == User.Identity.Name), "ActivityTypeID", "ActTypeDescrip");
             return View();
         }
 
@@ -57,19 +61,23 @@ namespace ProjectTimeTrackerAuth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ActivityID,Username,ActivityName,ActivityTypeID")] Activity activity)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("ActivityName,ActivityTypeID")] Activity activity)
         {
+            activity.Username = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
                 _context.Add(activity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes, "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
+            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes.Where(o => o.Username == User.Identity.Name), "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
             return View(activity);
         }
 
         // GET: Activities/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,12 +85,12 @@ namespace ProjectTimeTrackerAuth.Controllers
                 return NotFound();
             }
 
-            var activity = await _context.Activities.SingleOrDefaultAsync(m => m.ActivityID == id);
+            var activity = await _context.Activities.SingleOrDefaultAsync(m => m.ActivityID == id && m.Username == User.Identity.Name);
             if (activity == null)
             {
                 return NotFound();
             }
-            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes, "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
+            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes.Where(o => o.Username == User.Identity.Name), "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
             return View(activity);
         }
 
@@ -91,9 +99,10 @@ namespace ProjectTimeTrackerAuth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ActivityID,Username,ActivityName,ActivityTypeID")] Activity activity)
         {
-            if (id != activity.ActivityID)
+            if (id != activity.ActivityID || activity.Username != User.Identity.Name)
             {
                 return NotFound();
             }
@@ -118,11 +127,12 @@ namespace ProjectTimeTrackerAuth.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes, "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
+            ViewData["ActivityTypeID"] = new SelectList(_context.ActivityTypes.Where(o => o.Username == User.Identity.Name), "ActivityTypeID", "ActTypeDescrip", activity.ActivityTypeID);
             return View(activity);
         }
 
         // GET: Activities/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,7 +142,7 @@ namespace ProjectTimeTrackerAuth.Controllers
 
             var activity = await _context.Activities
                 .Include(a => a.ActivityTypes)
-                .SingleOrDefaultAsync(m => m.ActivityID == id);
+                .SingleOrDefaultAsync(m => m.ActivityID == id && m.Username == User.Identity.Name);
             if (activity == null)
             {
                 return NotFound();
@@ -144,9 +154,10 @@ namespace ProjectTimeTrackerAuth.Controllers
         // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activity = await _context.Activities.SingleOrDefaultAsync(m => m.ActivityID == id);
+            var activity = await _context.Activities.SingleOrDefaultAsync(m => m.ActivityID == id && m.Username == User.Identity.Name);
             _context.Activities.Remove(activity);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -154,7 +165,7 @@ namespace ProjectTimeTrackerAuth.Controllers
 
         private bool ActivityExists(int id)
         {
-            return _context.Activities.Any(e => e.ActivityID == id);
+            return _context.Activities.Any(e => e.ActivityID == id && e.Username == User.Identity.Name);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ProjectTimeTrackerAuth.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "Activity Description cannot be longer than 50 characters")]
-        [Display(Name = "Description")]
+        [Display(Name = "Activity Type")]
         public string ActTypeDescrip { get; set; }
 
         [Display(Name = "Production")]

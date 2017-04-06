@@ -1,10 +1,10 @@
 @model IEnumerable<ProjectTimeTrackerAuth.Models.ActivityType>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Activity Types";
 }
 
-<h2>Index</h2>
+<h2>Activity Types</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,12 +12,12 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActTypeDescrip)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActTypeProd)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActTypeDescrip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActTypeProd)
+            </th>
             <th></th>
         </tr>
     </thead>

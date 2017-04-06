@@ -1,7 +1,7 @@
 @model ProjectTimeTrackerAuth.Models.Activity
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Activity";
 }
 
 <h2>Create</h2>
@@ -12,13 +12,6 @@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Username" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="ActivityName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="ActivityName" class="form-control" />
@@ -28,7 +21,9 @@
         <div class="form-group">
             <label asp-for="ActivityTypeID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="ActivityTypeID" class ="form-control" asp-items="ViewBag.ActivityTypeID"></select>
+                <select asp-for="ActivityTypeID" class ="form-control" asp-items="ViewBag.ActivityTypeID">
+                    <option value="">-- Select Activity Type --</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
