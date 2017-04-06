@@ -1,36 +1,23 @@
 @model ProjectTimeTrackerAuth.Models.TimeLog
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Time Log";
 }
 
 <h2>Edit</h2>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>TimeLog</h4>
+        <h4>Time Log</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="TimeLogID" />
-        <div class="form-group">
-            <label asp-for="Username" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-        </div>
+    <input type="hidden" asp-for="Username" />
         <div class="form-group">
             <label asp-for="ActivityID" class="control-label col-md-2"></label>
             <div class="col-md-10">
                 <select asp-for="ActivityID" class="form-control" asp-items="ViewBag.ActivityID"></select>
                 <span asp-validation-for="ActivityID" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="UsersID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="UsersID" class="form-control" />
-                <span asp-validation-for="UsersID" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

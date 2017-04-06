@@ -22,10 +22,20 @@ namespace ProjectTimeTrackerAuth.Controllers
 
         // GET: Activities
         [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            var timerContext = _context.Activities.Include(a => a.ActivityTypes);
-            return View(await timerContext.ToListAsync());
+        public async Task<IActionResult> Index() {
+
+            string query = "SELECT * FROM Activity WHERE Username = {0}";
+            var activity = await _context.Activities
+                .FromSql(query, User.Identity.Name)
+                .Include(a => a.ActivityTypes)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (activity == null) {
+                return NotFound();
+            }
+
+            return View(activity);
         }
 
         // GET: Activities/Details/5

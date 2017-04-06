@@ -1,10 +1,10 @@
 @model IEnumerable<ProjectTimeTrackerAuth.Models.TimeLog>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Time Logs";
 }
 
-<h2>Index</h2>
+<h2>Time Logs</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,20 +12,14 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UsersID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndTime)
-                </th>
             <th>
                 @Html.DisplayNameFor(model => model.Activities)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th></th>
         </tr>
@@ -34,19 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsersID)
+                @Html.DisplayFor(modelItem => item.Activities.ActivityName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activities.ActivityID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TimeLogID">Edit</a> |
