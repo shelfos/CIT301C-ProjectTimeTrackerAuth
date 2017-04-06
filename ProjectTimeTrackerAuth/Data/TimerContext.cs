@@ -11,9 +11,9 @@ namespace ProjectTimeTrackerAuth.Data {
         public DbSet<TimeLog> TimeLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Activity>().ToTable("Activities");
-            modelBuilder.Entity<ActivityType>().ToTable("ActivityTypes");
-            modelBuilder.Entity<TimeLog>().ToTable("TimeLogs");
+            modelBuilder.Entity<Activity>().ToTable("Activity");
+            modelBuilder.Entity<ActivityType>().ToTable("ActivityType");
+            modelBuilder.Entity<TimeLog>().ToTable("TimeLog");
         }
     }
 }
