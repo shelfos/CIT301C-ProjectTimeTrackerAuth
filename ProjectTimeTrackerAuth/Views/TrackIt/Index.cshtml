@@ -19,7 +19,11 @@
 
 <h2>Track It!</h2>
 @if (ViewBag.LastTimeLog != null) {
-    <form asp-action="StopActivity">
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="TimeLogID" value="@ViewBag.LastTimeLog.TimeLogID"/>
+        <input type="hidden" asp-for="Username" value="@ViewBag.LastTimeLog.Username" />
+        <input type="hidden" asp-for="StartTime" value="@ViewBag.LastTimeLog.StartTime" />
+        <input type="hidden" asp-for="ActivityID" value="@ViewBag.LastTimeLog.ActivityID" />
         <div class="form-horizontal">
             <div class="form-group">
                 <dl class="dl-horizontal col-md-6">
@@ -34,7 +38,7 @@
         </div>
     </form>
 }
-<form asp-action="StartActivity">
+<form asp-action="Create">
     <div class="form-horizontal">
         <div class="form-group">
             <dl class="dl-horizontal col-md-6">
